@@ -1,0 +1,27 @@
+1-why should we push package.json and packagelock..json to github?
+
+1-Great question! Here are a few reasons why you should push package.json and package-lock.json to GitHub:
+
+Dependency Management:
+
+package.json lists the dependencies your project needs. Sharing this file allows others to understand which packages are necessary for your project to run.
+
+package-lock.json ensures that the exact versions of dependencies are installed. This prevents discrepancies between environments and helps maintain consistency.
+
+Collaboration:
+
+Both files are essential for developers working on the same project to install the correct dependencies. By pushing them to GitHub, everyone can easily clone the repository and run npm install to set up the development environment.
+
+Version Control:
+
+Using GitHub allows you to track changes to these files. If a new package is added or an existing one is updated, you can see the changes in the commit history.
+
+Automation:
+
+Many CI/CD (Continuous Integration/Continuous Deployment) systems rely on package.json and package-lock.json to install the correct dependencies and run tests. Pushing these files ensures that the automated builds are set up correctly.
+
+Reproducibility:
+
+Having these files in the repository ensures that anyone can replicate the project setup accurately, leading to fewer "it works on my machine" issues.
+
+2-
