@@ -24,4 +24,15 @@ Reproducibility:
 
 Having these files in the repository ensures that anyone can replicate the project setup accurately, leading to fewer "it works on my machine" issues.
 
-2-
+
+
+2-why app.use "/" router was not working properli why its effect all route how to solve it?
+
+2-The issue you're experiencing with app.use("/") in your Express.jsapplication affecting all routes is likely due to how middleware and routing are set up in Express.
+
+When you use app.use("/"), it means that the middleware or router will be applied to every route, since / matches all routes. Here's why this happens and how you can fix it:
+
+Why It Affects All Routes
+Wildcard Matching: The / route acts like a wildcard. It matches the base path of any URL in your app, thus the middleware or router is invoked for every request.
+
+Middleware Execution: Middleware functions are executed in the order they are added. So, if you have app.use("/") near the top, it will affect every subsequent route.
