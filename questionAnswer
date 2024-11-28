@@ -36,3 +36,43 @@ Why It Affects All Routes
 Wildcard Matching: The / route acts like a wildcard. It matches the base path of any URL in your app, thus the middleware or router is invoked for every request.
 
 Middleware Execution: Middleware functions are executed in the order they are added. So, if you have app.use("/") near the top, it will affect every subsequent route.
+
+
+3-what is bin in node modules
+
+3-The bin directory within node_modules is where the binaries (executables) from your Node.jsmodules are stored. When you install packages locally, npm links the executables into ./node_modules/.bin so they can be easily accessed and run through npm scripts2. This setup ensures that tools like test runners or build scripts are available in your project's path when you run commands like npm test
+
+
+
+4-tilde vs caret
+
+4-Tilde (~) notation
+The tilde (~) notation is employed to match the latest patch version while freezing the major and minor versions. This notation is useful for automatically accepting bug fixes, considering that patch updates primarily address bugs.
+
+Example: The ~1.2.0 will update all the future patch updates. We have to write just ~1.2.0 and all the next patch update dependencies. For example, 1.2.1, 1.2.2, 1.2.5……………1.2.x.
+Note: Patch updates are very small security changes in a package that is why the ~version is approximately equivalent to the version.
+
+Use ~ when you want to avoid minor version updates but still receive patch updates for bug fixes.
+
+Caret (^) notation
+It automatically updates both minor and patch updates.
+
+Example: The ^1.2.4 will update all the future Minor and patch updates, for example, ^1.2.4 will automatically change the dependency to 1.x.x if any update occurs. 
+Using caret notation it is important to look at our code regularly if it is compatible with the newest version or not.
+
+Use ^ when you want to allow minor updates that may add features but avoid major updates that could introduce breaking changes.
+
+
+
+5-why should we push  package.json and packagelock..json to github
+
+5-Project Metadata: Contains essential information about the project, such as its name, version, and dependencies.
+
+Dependency Management: Lists the packages required for the project, ensuring that anyone cloning the repository knows what dependencies are needed.
+
+package-lock.json
+Exact Dependency Versions: Locks down the specific versions of dependencies, ensuring that everyone working on the project uses the same versions. This prevents the "it works on my machine" problem.
+
+Reproducible Builds: Guarantees that the project can be built and run in the same way across different environments, making it easier to debug and collaborate.
+
+Security: Helps in identifying and fixing vulnerabilities by locking down the versions of dependencies.
