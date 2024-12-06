@@ -76,3 +76,56 @@ Exact Dependency Versions: Locks down the specific versions of dependencies, ens
 Reproducible Builds: Guarantees that the project can be built and run in the same way across different environments, making it easier to debug and collaborate.
 
 Security: Helps in identifying and fixing vulnerabilities by locking down the versions of dependencies.
+
+
+
+
+ mongodb+srv://shaadansari8081:<db_password>@devtinder.dczu9.mongodb.net/ strings
+ LY78gIVxP0LZuNsR mongo db password
+mongoose documentation
+
+
+
+what is model in mongoose
+In Mongoose, a model is a crucial part of how you interact with your MongoDB database. Here's a concise overview:
+
+Definition: A model in Mongoose is a class that lets you interact with the documents in a specific collection. It provides a high-level interface for creating, reading, updating, and deleting records.
+
+Schema: Every model is created from a schema. The schema defines the structure of the documents, default values, validators, and more.
+
+Usage: You can create new documents, find existing ones, update them, and delete them using models.
+
+Example
+Here's an example to illustrate:
+
+javascript
+const mongoose = require('mongoose');
+
+// Define a schema
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  age: Number
+});
+
+// Create a model from the schema
+const User = mongoose.model('User', userSchema);
+
+// Use the model to interact with the database
+const newUser = new User({ name: 'Alice', email: 'alice@example.com', age: 25 });
+newUser.save((err) => {
+  if (err) return console.error(err);
+  console.log('User saved!');
+});
+In this example:
+
+userSchema defines the structure of the User documents.
+
+User is the model created from userSchema.
+
+newUser.save() is used to save a new document to the User collection.
+
+Models are powerful tools that help you work with your MongoDB data efficiently.
+
+Hope this helps!
+
