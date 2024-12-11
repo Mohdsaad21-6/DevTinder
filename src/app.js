@@ -1,4 +1,3 @@
-
 const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
@@ -33,41 +32,46 @@ app.get("/user", async (req, res) => {
       res.send(users);
     }
   } catch (err) {
-    res.status(400).send('something went wronged');
+    res.status(400).send("something went wronged");
   }
 });
 
-
-
-app.delete("/user",async(req,res)=>{
-
-  const userId =req.body.userId;
-  try{
+app.delete("/user", async (req, res) => {
+  const userId = req.body.userId;
+  try {
     const user = await User.findByIdAndDelete(userId);
     res.send("user deleted");
-  }catch{
-    res.status(400).send('something went wrong')
-  }
-})
-
-
-
-app.get("/feed",async (req, res) => {
-  try{
-    const users=await  User.find({});
-    res.send(users);
-
-
-  }
-  catch(err){
-    res.status(400).send('something went wronged');
+  } catch {
+    res.status(400).send("something went wrong");
   }
 });
 
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.send(users);
+  } catch (err) {
+    res.status(400).send("something went wronged");
+  }
+});
+//update the data of the user
 
+app.patch("/user", async (req, res) => {
+  const userId = req.body.userId;
 
+  const data = req.body;
+  // console.log(data);
+  
 
-
+  try {
+   const user = await User.findByIdAndUpdate({ _id: userId },  data ,{returnDocument:"after"});
+   console.log(user);
+   
+    res.send("User updated successfully");
+  } catch {
+    res.status(400).send("something went wrong");
+  }
+});
 connectDB()
   .then(() => {
     console.log("Database connection is successfully established");
