@@ -61,13 +61,28 @@ app.patch("/user", async (req, res) => {
 
   const data = req.body;
   // console.log(data);
-  
 
   try {
-   const user = await User.findByIdAndUpdate({ _id: userId },  data ,{returnDocument:"after"});
-   console.log(user);
-   
+    const user = await User.findByIdAndUpdate({ _id: userId }, data, {
+      returnDocument: "after",
+    });
+    // console.log(user);
+
     res.send("User updated successfully");
+  } catch {
+    res.status(400).send("something went wrong");
+  }
+});
+
+app.patch("/edit", async (req, res) => {
+  const email = req.body.emailId;
+
+  const data = req.body;
+  try {
+    const user = await User.findOneAndUpdate({ emailId: email }, data);
+    console.log(user);
+
+    res.send("user edited successfully");
   } catch {
     res.status(400).send("something went wrong");
   }
