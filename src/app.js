@@ -16,7 +16,7 @@ app.post("/signup", async (req, res) => {
     res.send("User  created successfully");
   } catch (err) {
     console.error("Error creating user:", err); // Log the error for debugging
-    res.sendStatus(404); // Send a proper status code
+    res.sendStatus(400); // Send a proper status code
   }
 });
 
@@ -65,12 +65,13 @@ app.patch("/user", async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate({ _id: userId }, data, {
       returnDocument: "after",
+      runValidators:true,
     });
     // console.log(user);
 
     res.send("User updated successfully");
-  } catch {
-    res.status(400).send("something went wrong");
+  } catch(err) {
+    res.status(400).send("UPDATE FAILED:"+err.message);
   }
 });
 
