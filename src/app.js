@@ -2,7 +2,6 @@ const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user");
-// const e = require("express");
 
 app.use(express.json());
 
@@ -12,6 +11,27 @@ app.post("/signup", async (req, res) => {
   const user = new User(req.body);
 
   try {
+    const data = req.body;
+    console.log(data);
+
+    const ALLOW_FIELDS = [
+      "firstName",
+      "lastName",
+      "age",
+      "gender",
+      "emailId",
+      "skills",
+      "password",
+      "Url",
+      "about",
+    ];
+
+    const isAllowed = Object.keys(data).every((k) => ALLOW_FIELDS.includes(k));
+
+    if (!isAllowed) {
+      throw new Error("send a valid fields");
+    }
+
     await user.save();
     res.send("User  created successfully");
   } catch (err) {
@@ -56,22 +76,34 @@ app.get("/feed", async (req, res) => {
 });
 //update the data of the user
 
-app.patch("/user", async (req, res) => {
-  const userId = req.body.userId;
+app.patch("/user/:userId", async (req, res) => {
+  const userId = req.params?.userId;
+  console.log(userId);
 
   const data = req.body;
   // console.log(data);
 
   try {
+    const ALLOWED_UPDATES = ["photoUrl", "about", "gender", "age", "skills"];
+
+    const isUpdateAllowed = Object.keys(data).every((k) =>
+      ALLOWED_UPDATES.includes(k)
+    );
+    if (!isUpdateAllowed) {
+      throw new Error("update not allowed");
+    }
+    if (data?.skills.length > 10) {
+      throw new Error("skills can't be more than 10");
+    }
     const user = await User.findByIdAndUpdate({ _id: userId }, data, {
       returnDocument: "after",
-      runValidators:true,
+      runValidators: true,
     });
     // console.log(user);
 
     res.send("User updated successfully");
-  } catch(err) {
-    res.status(400).send("UPDATE FAILED:"+err.message);
+  } catch (err) {
+    res.status(400).send("UPDATE FAILED:" + err.message);
   }
 });
 
