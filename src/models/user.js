@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+const validator=require("validator");
+const {isEmail} =require('validator/lib/isEmail');
+
+
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -16,10 +20,19 @@ const userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     trim: true,
+    validate(value){
+      if(!validator.isEmail(value))
+        throw new Error("Invalid Email"+value)
+    }
   },
   password: {
     type: String,
     required: true,
+    validate(value){
+      if(!validator.isStrongPassword(value)){
+        throw new Error("Enter a strong password")
+    }
+},
   },
   age: {
     type: Number,
@@ -38,6 +51,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     default:
       "https://med.gov.bz/wp-content/uploads/2020/08/dummy-profile-pic.jpg",
+      validate(value){
+        if(!validator.isURL(value)){
+          throw new Error("invalid photo url")
+      }
+  },
   },
   about: {
     type: String,
