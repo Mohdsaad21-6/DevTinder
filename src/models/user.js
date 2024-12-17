@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const validator=require("validator");
-// const {isEmail} =require('validator/lib/isEmail');
 
 
 
@@ -12,7 +11,7 @@ const userSchema = new mongoose.Schema({
     maxLength: 50,
     validate(value){
       if(!validator.isAlpha(value)){
-        throw new Error(" firstName should be only letter!!!"+value)
+        throw new Error(" firstName should be only letter!!!"+ value)
       }
     }
   },

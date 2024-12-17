@@ -2,41 +2,101 @@ const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user");
+const { validateSignupData } = require("./utils/validation");
+const bcrypt = require("bcrypt");
 
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
-  // User is a blueprint of object...
-  //user is actually a object...
-  const user = new User(req.body);
+  //validation of data
 
   try {
+    validateSignupData(req);
+
+    //encrypt  the password
+
+    const { firstName, lastName, age, about, skills, emailId, password } =
+      req.body;
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    console.log(passwordHash);
+
+    const user = new User({
+      firstName,
+      lastName,
+      emailId,
+      password: passwordHash,
+      age,
+      about,
+      skills,
+    });
+
     const data = req.body;
     console.log(data);
 
-    const ALLOW_FIELDS = [
-      "firstName",
-      "lastName",
-      "age",
-      "gender",
-      "emailId",
-      "skills",
-      "password",
-      "Url",
-      "about",
-    ];
+    // const ALLOW_FIELDS = [
+    //   "firstName",
+    //   "lastName",
+    //   "age",
+    //   "gender",
+    //   "emailId",
+    //   "skills",
+    //   "password",
+    //   "Url",
+    //   "about",
+    // ];
 
-    const isAllowed = Object.keys(data).every((k) => ALLOW_FIELDS.includes(k));
+    // const isAllowed = Object.keys(data).every((k) => ALLOW_FIELDS.includes(k));
 
-    if (!isAllowed) {
-      throw new Error("send a valid fields");
-    }
+    // if (!isAllowed) {
+    //   throw new Error("send a valid fields");
+    // }
 
     await user.save();
     res.send("User  created successfully");
   } catch (err) {
-    console.error("Error creating user:", err); // Log the error for debugging
+    console.error("ERROR:" + err.message); // Log the error for debugging
     res.sendStatus(400); // Send a proper status code
+  }
+});
+
+// app.post("/login", async (req, res) => {
+//   try {
+//     const { emailId, password } = req.body;
+
+//     const user = await User.findOne({ emailId: emailId });
+
+//     if (!user) {
+//       throw new Error("Emailid is not present in DB");
+//     }
+
+//     const isPasswordValid = await bcrypt.compare(password,user.password);
+
+//     if (isPasswordValid) {
+//       res.send("Login Successfull");
+//     }else{
+//       throw new Error("Password is not correct")
+//     }
+//   } catch (err) {
+//     res.status(400).send("something went wronged");
+//   }
+// });
+
+app.post("/login", async (req, res) => {
+  try {
+    const { emailId, password } = req.body;
+    const user = await User.findOne({ emailId: emailId });
+    if (!user) {
+      throw new Error("Invalid credentials");
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (isPasswordValid) {
+      res.send("Login Successful!!!");
+    } else {
+      throw new Error("Invalid credentials");
+    }
+  } catch (err) {
+    res.status(400).send("ERROR : " + err.message);
   }
 });
 
