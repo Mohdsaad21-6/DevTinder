@@ -4,16 +4,14 @@ const app = express();
 const User = require("./models/user");
 const { validateSignupData } = require("./utils/validation");
 const bcrypt = require("bcrypt");
-
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 app.use(express.json());
+app.use(cookieParser());
 
 app.post("/signup", async (req, res) => {
-  //validation of data
-
   try {
     validateSignupData(req);
-
-    //encrypt  the password
 
     const { firstName, lastName, age, about, skills, emailId, password } =
       req.body;
@@ -31,56 +29,13 @@ app.post("/signup", async (req, res) => {
       skills,
     });
 
-    const data = req.body;
-    console.log(data);
-
-    // const ALLOW_FIELDS = [
-    //   "firstName",
-    //   "lastName",
-    //   "age",
-    //   "gender",
-    //   "emailId",
-    //   "skills",
-    //   "password",
-    //   "Url",
-    //   "about",
-    // ];
-
-    // const isAllowed = Object.keys(data).every((k) => ALLOW_FIELDS.includes(k));
-
-    // if (!isAllowed) {
-    //   throw new Error("send a valid fields");
-    // }
-
     await user.save();
     res.send("User  created successfully");
   } catch (err) {
-    console.error("ERROR:" + err.message); // Log the error for debugging
-    res.sendStatus(400); // Send a proper status code
+    console.error("ERROR:" + err.message);
+    res.sendStatus(400);
   }
 });
-
-// app.post("/login", async (req, res) => {
-//   try {
-//     const { emailId, password } = req.body;
-
-//     const user = await User.findOne({ emailId: emailId });
-
-//     if (!user) {
-//       throw new Error("Emailid is not present in DB");
-//     }
-
-//     const isPasswordValid = await bcrypt.compare(password,user.password);
-
-//     if (isPasswordValid) {
-//       res.send("Login Successfull");
-//     }else{
-//       throw new Error("Password is not correct")
-//     }
-//   } catch (err) {
-//     res.status(400).send("something went wronged");
-//   }
-// });
 
 app.post("/login", async (req, res) => {
   try {
@@ -91,12 +46,45 @@ app.post("/login", async (req, res) => {
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (isPasswordValid) {
+      const token = await jwt.sign({ _id: user._id }, "DEV@TINDER$790");
+      console.log(token);
+
+      //create a JWT token
+      //Add the token to the cookie and send a resp to the user
+
+      res.cookie("token", token);
       res.send("Login Successful!!!");
     } else {
       throw new Error("Invalid credentials");
     }
   } catch (err) {
     res.status(400).send("ERROR : " + err.message);
+  }
+});
+
+app.get("/profile", async (req, res) => {
+  try {
+    const cookies = req.cookies;
+
+    const { token } = cookies;
+    if (!token) {
+      throw new Error("Invalid Token")
+    }
+
+    const deCodedMessage = await jwt.verify(token, "DEV@TINDER$790");
+    const { _id } = deCodedMessage;
+    console.log("logged in user is" + _id);
+
+    const user = await User.findById(_id);
+    if(!user){
+      throw new Error("user doesnt exist")
+    }
+
+    console.log(deCodedMessage);
+    // console.log(cookies);
+    res.send(user);
+  } catch {
+    res.status(401).send("Unauthorized");
   }
 });
 
@@ -134,7 +122,6 @@ app.get("/feed", async (req, res) => {
     res.status(400).send("something went wronged");
   }
 });
-//update the data of the user
 
 app.patch("/user/:userId", async (req, res) => {
   const userId = req.params?.userId;
