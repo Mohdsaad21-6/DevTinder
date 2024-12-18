@@ -225,3 +225,42 @@ isURL: Validates if a string is a URL.
 
 These validators are part of the validator library, which is widely used for data validation in Node.jsapplications. If you need more details on any specific validator, feel free to ask!
 
+
+
+why we use cookies to send a token in express js
+Using cookies to send tokens in an Express.jsapplication is a common practice for managing authentication and maintaining user sessions. Here are the main reasons why cookies are used for this purpose:
+
+1. Stateless Authentication
+Cookies help implement stateless authentication by storing the token on the client side. This reduces the need for server-side session management, making the application more scalable.
+
+2. Automatic Inclusion
+Cookies are automatically included in HTTP requests by the browser, which simplifies the process of sending the token with each request. This ensures that the token is always available for authentication without the client needing to manually attach it to every request.
+
+3. Security
+When used with secure attributes, such as HttpOnly, Secure, and SameSite, cookies can provide a secure way to store tokens. The HttpOnly attribute prevents client-side scripts from accessing the token, reducing the risk of XSS attacks. The Secure attribute ensures that cookies are only sent over HTTPS, and the SameSite attribute helps mitigate CSRF attacks.
+
+4. Cross-Origin Resource Sharing (CORS)
+Cookies can be configured to work seamlessly with CORS policies, allowing for secure cross-origin requests in web applications. This is particularly useful for applications that have a separate frontend and backend hosted on different domains.
+
+5. Persistent Storage
+Cookies can be used to store tokens persistently across browser sessions by setting an expiration date. This allows users to remain authenticated even after closing and reopening the browser.
+
+
+
+diiference betwen cookies expirea and token expires?
+Cookies Expiry vs. Token Expiry
+Cookies Expiry:
+
+Set by the Server: The server sets the expiration date when the cookie is created.
+
+Client-Side Storage: Stored in the browser and automatically deleted after the expiry date.
+
+Persistent vs. Session: Persistent cookies have an expiry date; session cookies are deleted when the browser is closed.
+
+Token Expiry:
+
+Set by Token Issuer: The expiration time is embedded within the token itself, usually in JWT's exp claim.
+
+Client-Side Handling: Tokens are stored in local storage, session storage, or cookies by the client.
+
+Validation Required: Upon expiration, the server must validate the token and potentially refresh or reissue it.
