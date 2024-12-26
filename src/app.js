@@ -83,6 +83,8 @@ app.post("/sendConnectionRequest", userAuth, async (req, res) => {
   res.send(user.firstName + "sent a request");
 });
 
+
+
 connectDB()
   .then(() => {
     console.log("Database connection is successfully established");
