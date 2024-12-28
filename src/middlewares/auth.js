@@ -18,6 +18,7 @@ const userAuth = async (req, res, next) => {
     if (!user) {
       throw new Error("user not found ");
     }
+    //attaching a user in request body...
     req.user = user;
     next();
   } catch (err) {
