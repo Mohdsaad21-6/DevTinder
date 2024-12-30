@@ -63,4 +63,65 @@ requestRouter.post(
   }
 );
 
+requestRouter.post(
+  "/request/review/:status/:requestId",
+  userAuth,
+  async (req, res) => {
+    try {
+      const loggedInUserId = req.user._id;
+      const { status, requestId } = req.params;
+
+      const allowedStatus = ["accepted", "rejected"];
+
+      if (!allowedStatus.includes(status)) {
+        return res.status(404).json({
+          message: "Invalid Status Type" + status,
+        });
+      }
+
+      const connectionRequest = await ConnectionRequest.findOne({
+        _id: requestId,
+        toUserId: loggedInUserId,
+        status: "interested",
+      });
+
+      if (!connectionRequest) {
+        res.status(400).json({
+          message: "Connection Request Not Found",
+        });
+      }
+
+      connectionRequest.status = status;
+
+      const data = await connectionRequest.save();
+      res.json({
+        message: "Request " + status,
+        data,
+      });
+    } catch (error) {
+      res.status(400).send("ERROR " + error.message);
+    }
+  }
+);
+
+// requestRouter.get("/request/review/:status/:requestId",userAuth,async(req,res)=>{
+//   try {
+//     const loggedInUserId=req.user._id;
+//     const {status,requestId}=req.params;
+
+//     const allowedStatus=[accepted,rejected];
+
+//     if(!allowedStatus.includes(status)){
+//       return res.json({
+//         message:"Invalid Status Type"+status,
+//       })
+//     }
+
+//   } catch (error) {
+//     res.status(404).json({
+//       message:"Error "+error.message
+//     })
+
+//   }
+// })
 module.exports = requestRouter;
