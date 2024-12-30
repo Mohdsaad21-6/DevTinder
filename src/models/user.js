@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema(
   {
     firstName: {
+      index: true, // This is an index field
       type: String,
       required: true,
       minLength: 4,
@@ -20,6 +21,7 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     emailId: {
+      
       type: String,
       required: true,
       unique: true,

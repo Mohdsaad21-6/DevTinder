@@ -22,6 +22,10 @@ const connectionRequestSchema = new mongoose.Schema(
   { Timestamp: true }
 );
 
+//so query will be faster
+//connectinrequest.find({fromUserId:1234567,toUserId:1234567})
+connectionRequestSchema.index({ fromUserId: 1, toUserId: 1 });
+
 connectionRequestSchema.pre("save", function (next) {
   const connectionRequest = this;
 
