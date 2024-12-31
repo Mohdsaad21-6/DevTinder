@@ -83,7 +83,7 @@ requestRouter.post(
         _id: requestId,
         toUserId: loggedInUserId,
         status: "interested",
-      });
+      }).populate("fromUserId","firstName lastName photoUrl age gender skills");
 
       if (!connectionRequest) {
         res.status(400).json({
