@@ -29,4 +29,9 @@ GET/user/connections
 GET/user/feed
 
 
+/feed?page=3&limit=10 => 21-30 .skip(20)  .limit(10)
+
+
+skip=(page-1)*limit  <== formula
+
 Status:ignore ,interested ,accepeted ,reject
