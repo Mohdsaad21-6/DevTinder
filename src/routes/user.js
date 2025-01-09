@@ -30,7 +30,7 @@ userRouter.get("/user/request/recieved", userAuth, async (req, res) => {
   }
 });
 
-const USER_SAFE_DATA = ["firstName", "lastName", "photoUrl", "skills"];
+const USER_SAFE_DATA = ["firstName", "lastName", "photoUrl", "skills","age","gender,","about"];
 
 userRouter.get("/user/connection", userAuth, async (req, res) => {
   try {

@@ -30,8 +30,8 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
     console.log(loggedInUser);
 
     res.send("profile updated succesflly");
-  } catch {
-    res.status(401).send("Something Went Wronged");
+  } catch(err) {
+    res.status(400).send(err.message);
   }
 });
 
