@@ -24,8 +24,6 @@ Reproducibility:
 
 Having these files in the repository ensures that anyone can replicate the project setup accurately, leading to fewer "it works on my machine" issues.
 
-
-
 2-why app.use "/" router was not working properli why its effect all route how to solve it?
 
 2-The issue you're experiencing with app.use("/") in your Express.jsapplication affecting all routes is likely due to how middleware and routing are set up in Express.
@@ -37,12 +35,9 @@ Wildcard Matching: The / route acts like a wildcard. It matches the base path of
 
 Middleware Execution: Middleware functions are executed in the order they are added. So, if you have app.use("/") near the top, it will affect every subsequent route.
 
-
 3-what is bin in node modules
 
 3-The bin directory within node_modules is where the binaries (executables) from your Node.jsmodules are stored. When you install packages locally, npm links the executables into ./node_modules/.bin so they can be easily accessed and run through npm scripts2. This setup ensures that tools like test runners or build scripts are available in your project's path when you run commands like npm test
-
-
 
 4-tilde vs caret
 
@@ -57,14 +52,12 @@ Use ~ when you want to avoid minor version updates but still receive patch updat
 Caret (^) notation
 It automatically updates both minor and patch updates.
 
-Example: The ^1.2.4 will update all the future Minor and patch updates, for example, ^1.2.4 will automatically change the dependency to 1.x.x if any update occurs. 
+Example: The ^1.2.4 will update all the future Minor and patch updates, for example, ^1.2.4 will automatically change the dependency to 1.x.x if any update occurs.
 Using caret notation it is important to look at our code regularly if it is compatible with the newest version or not.
 
 Use ^ when you want to allow minor updates that may add features but avoid major updates that could introduce breaking changes.
 
-
-
-5-why should we push  package.json and packagelock..json to github
+5-why should we push package.json and packagelock..json to github
 
 5-Project Metadata: Contains essential information about the project, such as its name, version, and dependencies.
 
@@ -77,14 +70,9 @@ Reproducible Builds: Guarantees that the project can be built and run in the sam
 
 Security: Helps in identifying and fixing vulnerabilities by locking down the versions of dependencies.
 
-
-
-
- mongodb+srv://shaadansari8081:<db_password>@devtinder.dczu9.mongodb.net/ strings
- LY78gIVxP0LZuNsR mongo db password
+mongodb+srv://shaadansari8081:<db_password>@devtinder.dczu9.mongodb.net/ strings
+LY78gIVxP0LZuNsR mongo db password
 mongoose documentation
-
-
 
 what is model in mongoose
 In Mongoose, a model is a crucial part of how you interact with your MongoDB database. Here's a concise overview:
@@ -103,9 +91,9 @@ const mongoose = require('mongoose');
 
 // Define a schema
 const userSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  age: Number
+name: String,
+email: String,
+age: Number
 });
 
 // Create a model from the schema
@@ -114,8 +102,8 @@ const User = mongoose.model('User', userSchema);
 // Use the model to interact with the database
 const newUser = new User({ name: 'Alice', email: 'alice@example.com', age: 25 });
 newUser.save((err) => {
-  if (err) return console.error(err);
-  console.log('User saved!');
+if (err) return console.error(err);
+console.log('User saved!');
 });
 In this example:
 
@@ -129,13 +117,7 @@ Models are powerful tools that help you work with your MongoDB data efficiently.
 
 Hope this helps!
 
-
-
-
 put vs patch
-
-
-
 
 best way to validation is db level or api validation?
 Both database-level and API-level validations play crucial roles in maintaining data integrity and ensuring the robustness of your application. Each has its advantages, and the best approach often involves a combination of both. Here's a breakdown:
@@ -225,27 +207,23 @@ isURL: Validates if a string is a URL.
 
 These validators are part of the validator library, which is widely used for data validation in Node.jsapplications. If you need more details on any specific validator, feel free to ask!
 
-
-
 why we use cookies to send a token in express js
 Using cookies to send tokens in an Express.jsapplication is a common practice for managing authentication and maintaining user sessions. Here are the main reasons why cookies are used for this purpose:
 
 1. Stateless Authentication
-Cookies help implement stateless authentication by storing the token on the client side. This reduces the need for server-side session management, making the application more scalable.
+   Cookies help implement stateless authentication by storing the token on the client side. This reduces the need for server-side session management, making the application more scalable.
 
 2. Automatic Inclusion
-Cookies are automatically included in HTTP requests by the browser, which simplifies the process of sending the token with each request. This ensures that the token is always available for authentication without the client needing to manually attach it to every request.
+   Cookies are automatically included in HTTP requests by the browser, which simplifies the process of sending the token with each request. This ensures that the token is always available for authentication without the client needing to manually attach it to every request.
 
 3. Security
-When used with secure attributes, such as HttpOnly, Secure, and SameSite, cookies can provide a secure way to store tokens. The HttpOnly attribute prevents client-side scripts from accessing the token, reducing the risk of XSS attacks. The Secure attribute ensures that cookies are only sent over HTTPS, and the SameSite attribute helps mitigate CSRF attacks.
+   When used with secure attributes, such as HttpOnly, Secure, and SameSite, cookies can provide a secure way to store tokens. The HttpOnly attribute prevents client-side scripts from accessing the token, reducing the risk of XSS attacks. The Secure attribute ensures that cookies are only sent over HTTPS, and the SameSite attribute helps mitigate CSRF attacks.
 
 4. Cross-Origin Resource Sharing (CORS)
-Cookies can be configured to work seamlessly with CORS policies, allowing for secure cross-origin requests in web applications. This is particularly useful for applications that have a separate frontend and backend hosted on different domains.
+   Cookies can be configured to work seamlessly with CORS policies, allowing for secure cross-origin requests in web applications. This is particularly useful for applications that have a separate frontend and backend hosted on different domains.
 
 5. Persistent Storage
-Cookies can be used to store tokens persistently across browser sessions by setting an expiration date. This allows users to remain authenticated even after closing and reopening the browser.
-
-
+   Cookies can be used to store tokens persistently across browser sessions by setting an expiration date. This allows users to remain authenticated even after closing and reopening the browser.
 
 diiference betwen cookies expirea and token expires?
 Cookies Expiry vs. Token Expiry
@@ -264,3 +242,6 @@ Set by Token Issuer: The expiration time is embedded within the token itself, us
 Client-Side Handling: Tokens are stored in local storage, session storage, or cookies by the client.
 
 Validation Required: Upon expiration, the server must validate the token and potentially refresh or reissue it.
+
+how to toggle between signup and login
+create a left and right swipe card for calling rejected or interested api

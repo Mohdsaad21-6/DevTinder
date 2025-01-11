@@ -4,7 +4,6 @@ const { validateSignupData } = require("../utils/validation");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
-
 authRouter.post("/signup", async (req, res) => {
   try {
     validateSignupData(req);
@@ -25,8 +24,16 @@ authRouter.post("/signup", async (req, res) => {
       skills,
     });
 
-    await user.save();
-    res.send("User  created successfully");
+    const saveUser = await user.save();
+
+    const token=await saveUser.getJWT();
+
+    res.cookie("token",token,{
+      expires:new Date(Date.now()+3600000),
+    })
+
+
+    res.json({ message: "USER ADDED SUCCESSFULLY", data: saveUser });
   } catch (err) {
     console.error("ERROR:" + err.message);
     res.sendStatus(400);
@@ -49,7 +56,7 @@ authRouter.post("/login", async (req, res) => {
         httpOnly: true,
       });
       res.send(user);
-    } else { 
+    } else {
       throw new Error("Invalid credentials");
     }
   } catch (err) {

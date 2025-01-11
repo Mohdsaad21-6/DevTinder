@@ -15,6 +15,7 @@ userRouter.get("/user/request/recieved", userAuth, async (req, res) => {
       "firstName",
       "lastName",
       "skills",
+      "about",
       "photoUrl",
       "gender",
     ]);
