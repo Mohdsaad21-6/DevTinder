@@ -245,3 +245,20 @@ Validation Required: Upon expiration, the server must validate the token and pot
 
 how to toggle between signup and login
 create a left and right swipe card for calling rejected or interested api
+
+
+
+
+const { SESClient } = require("@aws-sdk/client-ses");
+// Set the AWS Region.
+const REGION = "ap-south-1";
+// Create SES service object.
+const sesClient = new SESClient({
+  region: REGION,
+  credentials: {
+    accessKeyId:process.env.ACCESS_KEY,
+    secretAccessKey:process.env.SECRET_ACCESS_KEY,
+  },
+});
+module.exports = { sesClient };
+// snippet-end:[ses.JavaScript.createclientv3]
