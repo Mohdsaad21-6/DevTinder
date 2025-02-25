@@ -5,11 +5,11 @@ Role of Architects: Capturing technical requirements is usually the responsibili
 Prioritizing Requirements: It's important to clarify priorities for the system, as perfection in every aspect is expensive and often not possible.
 
 User Experience and Security: For Digital Health, usability and reliability are crucial, but security is a top priority due to the sensitivity of health information.
-
+ 
 
 Influence on Project: Technical requirements influence the work of programmers and testers to ensure an improved user experience.
 
-
+asaas
 
 Architecture Design: The task involves understanding the client's technical requirements and designing the architecture accordingly. This can involve creating new designs or building on existing systems.
 
