@@ -5,6 +5,9 @@ const user = require("../models/user");
 
 const requestRouter = express.Router();
 
+const sendEmail=require("../utils/sendEmail")
+
+
 requestRouter.post(
   "/request/send/:status/:toUserId",
   userAuth,
@@ -52,6 +55,10 @@ requestRouter.post(
 
       const data = await connectionRequest.save();
 
+      const emailRes = await sendEmail.run(" a new friend request from"+req.user.firstName ,
+        req.user.firstName + " is " + status + " in " + toUser.firstName,);
+      console.log(emailRes);
+
       res.json({
         message:
           req.user.firstName + " is " + status + " in " + toUser.firstName,
@@ -83,7 +90,10 @@ requestRouter.post(
         _id: requestId,
         toUserId: loggedInUserId,
         status: "interested",
-      }).populate("fromUserId","firstName lastName photoUrl age gender about skills");
+      }).populate(
+        "fromUserId",
+        "firstName lastName photoUrl age gender about skills"
+      );
 
       if (!connectionRequest) {
         res.status(400).json({
@@ -103,8 +113,5 @@ requestRouter.post(
     }
   }
 );
-
-
-
 
 module.exports = requestRouter;
