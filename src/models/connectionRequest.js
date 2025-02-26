@@ -22,7 +22,7 @@ const connectionRequestSchema = new mongoose.Schema(
       },
     },
   },
-  { Timestamp: true }
+  { timestamps: true }
 );
 
 //so query will be faster

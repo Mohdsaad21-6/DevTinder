@@ -262,3 +262,10 @@ const sesClient = new SESClient({
 });
 module.exports = { sesClient };
 // snippet-end:[ses.JavaScript.createclientv3]
+
+\
+
+
+Q/feature to sent a email message daily to accept a froend request...
+
+#crom
