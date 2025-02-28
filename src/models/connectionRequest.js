@@ -23,6 +23,7 @@ const connectionRequestSchema = new mongoose.Schema(
     },
   },
   { timestamps: true }
+  //there is a issue with timestamps, it is not working sometimes 
 );
 
 //so query will be faster
