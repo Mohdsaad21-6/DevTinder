@@ -33,7 +33,7 @@ connectDB()
     require("./utils/cronjob");
 
     app.listen(process.env.PORT, () => {
-      console.log(`Server is successfully listening on port ${process.env.PORT}`);
+      console.log("Server is successfully listening on port 7777");
     });
   })
   .catch((err) => {
