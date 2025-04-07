@@ -21,7 +21,6 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     emailId: {
-      
       type: String,
       required: true,
       unique: true,
@@ -56,6 +55,13 @@ const userSchema = new mongoose.Schema(
       //     throw new Error("gender data is not valid");
       //   }
       // },
+    },
+    isPremium: {
+      type: Boolean,
+      default: false,
+    },
+    membershipType: {
+      type: String,
     },
     photoUrl: {
       type: String,
