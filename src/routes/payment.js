@@ -78,6 +78,9 @@ paymentRouter.post("/payment/webhook", async (req, res) => {
     const user = await User.findOne({ _id: payment.userId });
     user.isPremium = true;
     user.membershipType = payment.notes.membershipType;
+    await user.save();
+
+    
     //return the response to razorpay
     // if (req.body.event === "payment.captured") {
     // }
