@@ -15,6 +15,11 @@ paymentRouter.post("/payment/create", userAuth, async (req, res) => {
     const { membershipType } = req.body;
     const { firstName, lastName, emailId } = req.user;
 
+
+    //this order was coming from razor pay 
+    //copy from razorpay documnent
+    //see notes
+
     const order = await razorpayInstance.orders.create({
       amount: membershipAmount[membershipType] * 100, // amount in paise
       currency: "INR",
