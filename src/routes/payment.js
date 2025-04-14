@@ -15,8 +15,7 @@ paymentRouter.post("/payment/create", userAuth, async (req, res) => {
     const { membershipType } = req.body;
     const { firstName, lastName, emailId } = req.user;
 
-
-    //this order was coming from razor pay 
+    //this order was coming from razor pay
     //copy from razorpay documnent
     //see notes
 
@@ -59,7 +58,7 @@ paymentRouter.post("/payment/webhook", async (req, res) => {
     console.log("webhook called");
     const webhookSignature = req.get("X-Razorpay-signature");
     console.log(webhookSignature, "webhookSignature");
-    
+
     const isWebhookValid = validateWebhookSignature(
       JSON.stringify(req.body),
       webhookSignature,
@@ -80,7 +79,6 @@ paymentRouter.post("/payment/webhook", async (req, res) => {
     user.membershipType = payment.notes.membershipType;
     await user.save();
 
-    
     //return the response to razorpay
     // if (req.body.event === "payment.captured") {
     // }
@@ -89,8 +87,6 @@ paymentRouter.post("/payment/webhook", async (req, res) => {
     // }
 
     //update yhe user as premium
-    
-
 
     console.log(paymentDetails);
 
@@ -98,6 +94,15 @@ paymentRouter.post("/payment/webhook", async (req, res) => {
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }
+});
+
+paymentRouter.get("/premium/verify", userAuth, async (req, res) => {
+  const user = req.user;
+  if (user.isPremium) {
+    return res.status(200).json({ isPremium: true });
+  }
+
+  return res.status(200).json({ isPremium: false });
 });
 
 module.exports = paymentRouter;
